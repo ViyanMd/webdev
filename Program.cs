@@ -1,3 +1,5 @@
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -8,14 +10,21 @@ app.Run();
 
 async Task HangleRequest(HttpContext context)
 {
-    var path = context.Request.Path;
-    var date = DateTime.Now;
-    var response = context.Response;
+    context.Response.ContentType = "text/html; charset=utf-8";
 
-    if (path == "/date")
-        await response.WriteAsync($"Date: {date.ToShortDateString()}");
-    else if (path == "/time")
-        await response.WriteAsync($"Time: {date.ToShortTimeString()}");
-    else
-        await response.WriteAsync("Not found");
+    if (context.Request.Path == "/postuser")
+    {
+        var form = context.Request.Form;
+        var name = form["name"];
+        var age = form["age"];
+        StringBuilder langList = new StringBuilder();
+
+        foreach (var lang in form["languages"])
+            langList.Append(" " + lang);
+
+        await context.Response.WriteAsync($"<div><p>Name: {name}</p>" +
+            $"<p>Age: {age}</p>" +
+            $"<div>Languages:{langList}</div></div>");
+    } else
+        await context.Response.SendFileAsync("html/index.html");
 }   

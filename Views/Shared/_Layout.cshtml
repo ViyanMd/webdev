@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>webdev | @ViewBag.Title</title>
+</head>
+<body>
+    <div><a href="/Home/Index">Home</a> | <a href="/Home/About">About</a> | <a asp-controller="Forms" asp-action="Index">Forms</a></div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer>@await Html.PartialAsync("_Footer")</footer>
+</body>
+</html>

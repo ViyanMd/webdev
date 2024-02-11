@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using webdev.Data;
+using webdev.Models;
 
 namespace webdev.Controllers
 {
     [Route("Forms")]
     public class FormsController : Controller
     {
+        ApplicationContext db;
+        public FormsController(ApplicationContext _db)
+        {
+            db = _db;
+        }
+
         public IActionResult Index() => View();
-        
+
         [HttpGet]
         [Route("Basic")]
         public IActionResult Basic() => View();
-        
+
         [HttpPost]
         [Route("Basic")]
-        public string Basic(string username, string password, int age, string comment) => 
-            $"Name: {username} | Password: {password} | Age: {age} | Comment: {comment}";
-        
+        public async Task<IActionResult> Basic(User user)
+        {
+            db.users.Add(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
         [HttpGet]
         [Route("Checkbox")]
         public IActionResult Checkbox() => View();

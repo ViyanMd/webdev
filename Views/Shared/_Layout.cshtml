@@ -6,7 +6,11 @@
     <title>webdev | @ViewBag.Title</title>
 </head>
 <body>
-    <div><a href="/Home/Index">Home</a> | <a href="/Home/About">About</a> | <a asp-controller="Forms" asp-action="Index">Forms</a></div>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Home</a> | 
+        <a asp-controller="Home" asp-action="About">About</a> | 
+        <a asp-controller="Forms" asp-action="Index">Forms</a>
+    </div>
     <div>
         @RenderBody()
     </div>
